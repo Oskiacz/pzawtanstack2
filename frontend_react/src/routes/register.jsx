@@ -9,20 +9,20 @@ export const Route = createFileRoute('/register')({
 })
 
 function App() {
-  const nameRef=useRef();
-    const urlRef=useRef();
-    const textRef=useRef()
-    const sponsoredRef=useRef();
+  const emailRef=useRef();
+    const passwordRef=useRef();
+    const nameRef=useRef()
+    const genderRef=useRef();
 
     
 
     return(
         <div className='container form'>
+            <label htmlFor="email">email: </label><input id="email" type="text" className="form-control" ref={emailRef}/>
+            <label htmlFor="password">password: </label><input id="password" type="text" className="form-control" ref={passwordRef}/>
             <label htmlFor="name">name: </label><input id="name" type="text" className="form-control" ref={nameRef}/>
-            <label htmlFor="url">url: </label><input id="url" type="text" className="form-control" ref={urlRef}/>
-            <label htmlFor="text">text: </label><input id="text" type="text" className="form-control" ref={textRef}/>
-            <label htmlFor="checkBox">sponsored</label><input type="checkbox" id="checkBox" className="form-check" ref={sponsoredRef}/>
-            <input type="button" className="btn btn-secondary"value="Submit" onClick={()=>{axios.post("http://localhost:8000/send", {name: nameRef.current.value, url: urlRef.current.value, text: textRef.current.value, sponsored: sponsoredRef.current.checked})}}/>
+            <label htmlFor="gender">gender</label><input type="checkbox" id="gender" className="form-check" ref={genderRef}/>
+            <input type="button" className="btn btn-secondary"value="Submit" onClick={()=>{axios.post("http://localhost:8000/send", {email: emailRef.current.value, password: passwordRef.current.value, name: nameRef.current.value, gender: genderRef.current.checked})}}/>
         </div>
     )
 }

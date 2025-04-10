@@ -20,9 +20,10 @@ function RouteComponent() {
             <thead>
                 <tr>
                     <th>#</th>
+                    <th>Email</th>
+                    <th>Password</th>
                     <th>Name</th>
-                    <th>Url</th>
-                    <th>Text</th>
+                    <th>Gender</th>
                     <th>Delete</th>
                     <th></th>
                 </tr>
@@ -31,10 +32,11 @@ function RouteComponent() {
                 {data.map((e, i) => (
                     <tr>
                         <td>{e.id}</td>
+                        <td>{e.email}</td>
+                        <td>{e.password}</td>
                         <td>{e.name}</td>
-                        <td>{e.url}</td>
-                        <td>{e.text}</td>
-                        <td><input type="button" value="X" /></td>
+                        <td>{e.gender}</td>
+                        <td><input type="button" value="X" className="btn btn-secondary" onClick={() => {console.log(e.id); axios.delete('http://localhost:8000/delete/' + e.id).catch((err)=>console.log(err))}} /></td>
                     </tr>
                 ))}
             </tbody>
