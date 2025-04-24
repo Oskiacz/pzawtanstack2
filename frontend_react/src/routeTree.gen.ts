@@ -13,6 +13,7 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as TableImport } from './routes/table'
 import { Route as RegisterImport } from './routes/register'
+import { Route as LoginImport } from './routes/login'
 
 // Create/Update Routes
 
@@ -28,10 +29,23 @@ const RegisterRoute = RegisterImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const LoginRoute = LoginImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginImport
+      parentRoute: typeof rootRoute
+    }
     '/register': {
       id: '/register'
       path: '/register'
@@ -52,36 +66,41 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
+  '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/table': typeof TableRoute
 }
 
 export interface FileRoutesByTo {
+  '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/table': typeof TableRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
+  '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/table': typeof TableRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/register' | '/table'
+  fullPaths: '/login' | '/register' | '/table'
   fileRoutesByTo: FileRoutesByTo
-  to: '/register' | '/table'
-  id: '__root__' | '/register' | '/table'
+  to: '/login' | '/register' | '/table'
+  id: '__root__' | '/login' | '/register' | '/table'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
+  LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
   TableRoute: typeof TableRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
   TableRoute: TableRoute,
 }
@@ -96,9 +115,13 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.jsx",
       "children": [
+        "/login",
         "/register",
         "/table"
       ]
+    },
+    "/login": {
+      "filePath": "login.jsx"
     },
     "/register": {
       "filePath": "register.jsx"
